@@ -1,21 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useUserAuth } from "../context/UserAuthContext";
 
 const Login = () => {
+  const { handleLogin, handleGoogleLogin } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here using email and password
-    console.log("Login clicked");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    handleLogin(email, password);
+  };
+
+  const handleGoogleSignIn = () => {
+    handleGoogleLogin();
   };
 
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <label>
           Email:
           <input
@@ -29,13 +32,14 @@ const Login = () => {
           Password:
           <input
             type="password"
-            value=""
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <br />
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleGoogleSignIn}>Sign in with Google</button>
     </div>
   );
 };

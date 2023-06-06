@@ -3,6 +3,8 @@ import { auth } from "../firebase/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
@@ -61,6 +63,22 @@ export const UserAuthProvider = ({ children }) => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      // Signed in with Google
+      const user = userCredential.user;
+      console.log("User logged in with Google:", user);
+      // ...
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("Error:", errorCode, errorMessage);
+      // ..
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -82,6 +100,7 @@ export const UserAuthProvider = ({ children }) => {
         user,
         handleSignup,
         handleLogin,
+        handleGoogleLogin,
         handleLogout,
       }}
     >

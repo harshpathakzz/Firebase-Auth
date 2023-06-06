@@ -1,23 +1,20 @@
 import { useState } from "react";
-import { signup } from "../action/authActions";
+import { useUserAuth } from "../context/UserAuthContext";
 
 const Signup = () => {
+  const { handleSignup } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your signup logic here using email and password
-    signup(email, password);
-    console.log("Signup clicked");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    handleSignup(email, password);
   };
 
   return (
     <div>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSignup}>
+      <form onSubmit={handleSubmit}>
         <label>
           Email:
           <input
@@ -37,7 +34,7 @@ const Signup = () => {
           />
         </label>
         <br />
-        <button type="submit">Sign Up</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
