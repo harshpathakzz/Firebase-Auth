@@ -26,70 +26,42 @@ export const UserAuthProvider = ({ children }) => {
   }, []);
 
   const handleSignup = async (email, password) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // Signed in
-      const user = userCredential.user;
-      console.log("User created:", user);
-      // ...
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error:", errorCode, errorMessage);
-      // ..
-    }
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // Signed in
+    const user = userCredential.user;
+    console.log("User created:", user);
+    // ...
   };
 
   const handleLogin = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // Signed in
-      const user = userCredential.user;
-      console.log("User logged in:", user);
-      // ...
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error:", errorCode, errorMessage);
-      // ..
-    }
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // Signed in
+    const user = userCredential.user;
+    console.log("User logged in:", user);
+    // ...
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      // Signed in with Google
-      const user = userCredential.user;
-      console.log("User logged in with Google:", user);
-      // ...
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error:", errorCode, errorMessage);
-      // ..
-    }
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+    // Signed in with Google
+    const user = userCredential.user;
+    console.log("User logged in with Google:", user);
+    // ...
   };
 
   const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      console.log("User logged out");
-      // ...
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error:", errorCode, errorMessage);
-      // ..
-    }
+    await signOut(auth);
+    console.log("User logged out");
+    // ...
   };
 
   // Add any additional authentication-related functions you need

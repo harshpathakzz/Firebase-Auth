@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
-
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const { handleSignup } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSignup(email, password);
+
+    try {
+      await handleSignup(email, password);
+      navigate("/login");
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
   };
 
   return (

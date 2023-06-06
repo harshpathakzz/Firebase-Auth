@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { handleLogin, handleGoogleLogin } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); // Error state
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLogin(email, password);
+
+    try {
+      await handleLogin(email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      setError(error.message); // Update error state
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    handleGoogleLogin();
+  const handleGoogleSignIn = async () => {
+    try {
+      await handleGoogleLogin();
+      navigate("/dashboard");
+    } catch (error) {
+      setError(error.message); // Update error state
+    }
   };
 
   return (
     <div>
       <h1>Login</h1>
+      {error && <p>{error}</p>} {/* Render error message if error exists */}
       <form onSubmit={handleSubmit}>
         <label>
           Email:
