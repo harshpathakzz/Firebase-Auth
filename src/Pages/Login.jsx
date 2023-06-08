@@ -16,7 +16,30 @@ const Login = () => {
       await handleLogin(email, password);
       navigate("/dashboard");
     } catch (error) {
-      setError(error.message); // Update error state
+      let errorMessage = "";
+
+      switch (error.code) {
+        case "auth/user-not-found":
+          errorMessage = "User not found";
+          break;
+        case "auth/wrong-password":
+          errorMessage = "Incorrect credentials";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Invalid email format";
+          break;
+        case "auth/timeout":
+          errorMessage = "Timeout occurred";
+          break;
+        case "auth/network-request-failed":
+          errorMessage = "Network error";
+          break;
+        default:
+          errorMessage = error.message;
+          break;
+      }
+
+      setError(errorMessage);
     }
   };
 
