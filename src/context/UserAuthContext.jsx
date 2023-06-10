@@ -13,10 +13,14 @@ const userAuthContext = createContext(null);
 
 export const UserAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setIsLoggedIn(!!user);
+      console.log("User state changed:", user);
+      console.log("isLoggedIn state changed:", isLoggedIn);
     });
 
     // Cleanup the subscription on unmount
@@ -64,12 +68,18 @@ export const UserAuthProvider = ({ children }) => {
     // ...
   };
 
+  // Save isLoggedIn state to local storage
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
   // Add any additional authentication-related functions you need
 
   return (
     <userAuthContext.Provider
       value={{
         user,
+        isLoggedIn,
         handleSignup,
         handleLogin,
         handleGoogleLogin,
