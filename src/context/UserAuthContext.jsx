@@ -24,9 +24,7 @@ export const UserAuthProvider = ({ children }) => {
     });
 
     // Cleanup the subscription on unmount
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   const handleSignup = async (email, password) => {
@@ -64,7 +62,9 @@ export const UserAuthProvider = ({ children }) => {
 
   const handleLogout = async () => {
     await signOut(auth);
+    localStorage.removeItem("isLoggedIn");
     console.log("User logged out");
+
     // ...
   };
 
