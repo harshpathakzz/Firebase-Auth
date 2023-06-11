@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
-  const { handleSignup } = useUserAuth();
+  const { handleSignup, isLoggedIn } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); // Error state
   const navigate = useNavigate();
 
+  if (isLoggedIn) {
+    navigate("/dashboard");
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -14,13 +19,34 @@ const Signup = () => {
       await handleSignup(email, password);
       navigate("/login");
     } catch (error) {
-      console.log("An error occurred:", error);
+      let errorMessage = "";
+
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "Email is already in use";
+          break;
+        case "auth/weak-password":
+          errorMessage = "Password is too weak";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Invalid email format";
+          break;
+        case "auth/network-request-failed":
+          errorMessage = "Network error";
+          break;
+        default:
+          errorMessage = error.message;
+          break;
+      }
+
+      setError(errorMessage);
     }
   };
 
   return (
     <div>
       <h1>Sign Up</h1>
+      {error && <p>{error}</p>} {/* Render error message if error exists */}
       <form onSubmit={handleSubmit}>
         <label>
           Email:

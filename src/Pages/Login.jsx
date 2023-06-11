@@ -3,12 +3,15 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { handleLogin, handleGoogleLogin } = useUserAuth();
+  const { handleLogin, handleGoogleLogin, isLoggedIn } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate();
 
+  if (isLoggedIn) {
+    navigate("/dashboard");
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
