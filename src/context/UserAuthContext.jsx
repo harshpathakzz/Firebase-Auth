@@ -20,7 +20,7 @@ export const UserAuthProvider = ({ children }) => {
       setUser(user);
       setIsLoggedIn(!!user);
       console.log("User state changed:", user);
-      console.log("isLoggedIn state changed:", isLoggedIn);
+      // console.log("isLoggedIn state changed:", isLoggedIn);
     });
 
     // Cleanup the subscription on unmount
@@ -71,6 +71,7 @@ export const UserAuthProvider = ({ children }) => {
   // Save isLoggedIn state to local storage
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+    console.log(isLoggedIn);
   }, [isLoggedIn]);
 
   // Add any additional authentication-related functions you need

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { handleSignup, isLoggedIn } = useUserAuth();
@@ -69,6 +69,9 @@ const Signup = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
+      <p>
+        Have an account? <Link to="/login">Log in</Link>
+      </p>
     </div>
   );
 };
