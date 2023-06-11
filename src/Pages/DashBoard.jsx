@@ -1,8 +1,8 @@
-import React from "react";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
+import { handleLogout } from "../functions/authFunctions";
 const DashBoard = () => {
-  const { handleLogout, user } = useUserAuth();
+  const { user } = useUserAuth();
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/");

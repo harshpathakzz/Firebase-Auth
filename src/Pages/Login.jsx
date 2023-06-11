@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { handleGoogleLogin, handleLogin } from "../functions/authFunctions";
 
 const Login = () => {
-  const { handleLogin, handleGoogleLogin, isLoggedIn } = useUserAuth();
+  const { isLoggedIn } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  if (isLoggedIn) {
-    navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
