@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { handleLogin, handleGoogleLogin, isLoggedIn } = useUserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null); // Error state
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   if (isLoggedIn) {
     navigate("/dashboard");
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,14 +52,14 @@ const Login = () => {
       await handleGoogleLogin();
       navigate("/dashboard");
     } catch (error) {
-      setError(error.message); // Update error state
+      setError(error.message);
     }
   };
 
   return (
     <div>
       <h1>Login</h1>
-      {error && <p>{error}</p>} {/* Render error message if error exists */}
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Email:
@@ -81,6 +82,9 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+      <p>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
+      </p>
     </div>
   );
 };
