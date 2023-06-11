@@ -7,10 +7,10 @@ const Home = () => {
       <h1>Welcome to the Home Page</h1>
       <div>
         <Link to="/login">
-          <button>Login</button>
+          <button style={{ margin: "10px", padding: "5px" }}>Login</button>
         </Link>
         <Link to="/signup">
-          <button>Sign Up</button>
+          <button style={{ margin: "10px", padding: "5px" }}>Sign Up</button>
         </Link>
       </div>
     </div>
