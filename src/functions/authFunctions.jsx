@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-
+import { addUserToCollection } from "./dbFunctions";
 export const handleSignup = async (email, password) => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -16,6 +16,7 @@ export const handleSignup = async (email, password) => {
   );
   const user = userCredential.user;
   console.log("User created:", user);
+  await addUserToCollection(user);
   // ...
 };
 
@@ -35,6 +36,7 @@ export const handleGoogleLogin = async () => {
   const userCredential = await signInWithPopup(auth, provider);
   const user = userCredential.user;
   console.log("User logged in with Google:", user);
+  await addUserToCollection(user);
   // ...
 };
 
